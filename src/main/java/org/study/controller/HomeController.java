@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 public class HomeController {
     
-    @GetMapping
+    @GetMapping("/")
     public String home() {
-        log.info("=================> HomeController /");
-        return "index"; // View의 이름
+        // return "index";
+        return "redirect:/board/list";
     }
 }
