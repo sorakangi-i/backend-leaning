@@ -4,13 +4,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.study.board.domain.BoardAttachmentVO;
 import org.study.board.dto.BoardDTO;
 import org.study.board.service.BoardService;
+import org.study.common.util.UploadFiles;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
 @Controller
 @Log4j
@@ -61,5 +63,15 @@ public class BoardController {
         service.delete(no);
 
         return "redirect:/board/list";
+    }
+
+    // 다운로드
+    @GetMapping("/download/{no}")
+    @ResponseBody // view를 사용하지 않고 직접 내보냄
+    public void download(@PathVariable("no") Long no, HttpServletResponse response) throws Exception {
+        BoardAttachmentVO attach = service.getAttachment(no);
+        File file = new File(attach.getPath());
+
+        UploadFiles.download(response, file, attach.getFilename());
     }
 }

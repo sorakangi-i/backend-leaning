@@ -36,3 +36,27 @@ CREATE TABLE users(
     joindate    DATETIME        DEFAULT             CURRENT_TIMESTAMP
 );
 
+
+#첨부파일
+DROP TABLE IF EXISTS board_attachment;
+CREATE TABLE board_attachment (
+    no              INTEGER         AUTO_INCREMENT      PRIMARY KEY,
+    filename        VARCHAR(256)    NOT NULL,
+    path            VARCHAR(256)    NOT NULL,
+    content_type    VARCHAR(56)     NOT NULL,
+    size            INTEGER,
+    bno             INTEGER         NOT NULL,
+    reg_date        DATETIME        DEFAULT             now(),
+    CONSTRAINT FOREIGN KEY(bno) REFERENCES board(no)
+);
+
+#out join
+SELECT b.*,
+       a.no as ano,
+       a.bno, a.filename, a.path, a.content_type, a.size,
+       a.reg_date as a_reg_date
+from board b left outer join board_attachment a on b.no = a.bno
+where b.no = 1
+order by filename;
+
+SELECT * FROM board_attachment;

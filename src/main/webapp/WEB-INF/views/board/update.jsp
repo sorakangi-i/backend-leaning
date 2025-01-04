@@ -7,7 +7,7 @@
 
 <h2 class="page-header my-4">글 수정</h2>
 <div>
-    <form role="form" method="post">
+    <form role="form" method="post" enctype="multipart/form-data">
         <input type="hidden" name="no" value="${board.no}">
         <div>
             <label>제목</label>
@@ -18,7 +18,10 @@
             <label>작성자</label>
             <input name="writer" class="form-control" value="${board.writer}">
         </div>
-
+        <div>
+            <label>첨부파일 : </label>
+            <input type="file" multiple name="files" class="form-control-file border" />
+        </div>
         <div>
             <label>내용</label>
             <textarea class="form-control" name="content" row="10">${board.content}</textarea>

@@ -17,5 +17,13 @@
     background-size: cover;
     color: white;
     padding: 2rem;
-    margin-top:1.5rem;
+}
+
+.container {
+    min-height: 100vh;
+}
+
+footer {
+    background-color:#eee;
+
 }

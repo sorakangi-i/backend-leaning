@@ -83,8 +83,8 @@ class BoardControllerTest {
         String resultPage = mockMvc.perform(
                     MockMvcRequestBuilders.post("/board/update")
                             .param("no", "1")
-                            .param("title", "수정된 테스트 제목")
-                            .param("content", "수정된 글 내용")
+                            .param("title", "수정된 테스트 제목232656")
+                            .param("content", "수정된 글 내용15155")
                             .param("writer", "MockUser")
                 )
                 .andReturn()
@@ -97,8 +97,8 @@ class BoardControllerTest {
     @DisplayName("MockMvc를 통한 게시글 삭제")
     public void delete() throws Exception {
         String resultPage = mockMvc.perform(
-                    MockMvcRequestBuilders.post("/board/list")
-                            .param("no", "3")
+                    MockMvcRequestBuilders.post("/board/delete")
+                            .param("no", "1")
                 )
                 .andReturn()
                 .getModelAndView()

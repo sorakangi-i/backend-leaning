@@ -13,7 +13,16 @@
         <fmt:formatDate pattern="yyyy-MM-dd" value="${board.regDate}" />
     </div>
 </div>
-
+<div class="text-end">
+    <c:forEach var="file" items="${board.attaches}">
+        <div class="attach-file-item">
+            <a href="/board/download/${file.no}" class="file-link">
+                <i class="fa-solid fa-floppy-disk"></i>
+                ${file.filename} (${file.fileSize})
+            </a>
+        </div>
+    </c:forEach>
+</div>
 <hr>
 <div>
     <pre>${board.content}</pre>
@@ -29,7 +38,7 @@
     <input type="hidden" name="no" value="${board.no}" />
 </form>
 
-<script src="/resources/js/board.js"></script>
+<script src="/resources/js/main.js"></script>
 
 <%@include file="../layouts/footer.jsp"%>
 </html>

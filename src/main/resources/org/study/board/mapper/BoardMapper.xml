@@ -7,9 +7,9 @@
         ]]>
     </select>
 
-    <select id="get" resultType="BoardVO">
-        select * from board where no = #{no}
-    </select>
+<!--    <select id="get" resultType="BoardVO">-->
+<!--        select * from board where no = #{no}-->
+<!--    </select>-->
 
     <insert id="create">
         insert into board (title, content, writer)
@@ -32,4 +32,57 @@
     <delete id="delete">
         delete from board where no = #{no}
     </delete>
+
+    <!--  첨부파일  -->
+    <insert id="createAttachment">
+        insert into board_attachment(filename, path, content_type, size, bno)
+        values(#{filename}, #{path}, #{contentType}, #{size}, #{bno})
+    </insert>
+
+    <select id="getAttachmentList" resultType="BoardAttachmentVO">
+        select * from board_attachment
+                 where bno = #{bno}
+                 order by filename
+    </select>
+
+    <select id="getAttachment" resultType="BoardAttachmentVO">
+        select * from board_attachment
+                 where no = #{no}
+    </select>
+
+    <delete id="deleteAttachment">
+        delete from board_attachment where no = #{no}
+    </delete>
+
+    <!-- 게시글과 첨부파일의 연결을 위한 out join 처리 -->
+    <select id="get" resultMap="boardMap">
+        select b.*,
+               a.no as ano,
+               a.bno, a.filename, a.path, a.content_type, a.size,
+               a.reg_date as a_reg_date
+        from board b
+                 left outer join board_attachment a
+                                 on b.no = a.bno
+        where b.no = #{no}
+        order by filename
+    </select>
+
+    <resultMap id="attachmentMap" type="BoardAttachmentVO">
+        <id column="ano"                property="no"/>
+        <result column="bno"            property="bno"/>
+        <result column="filename"       property="filename"/>
+        <result column="contentType"    property="contentType"/>
+        <result column="size"           property="size"/>
+        <result column="a_reg_date"     property="regDate"/>
+    </resultMap>
+
+    <resultMap id="boardMap" type="BoardVO">
+        <id column="no"                 property="no"/>
+        <result column="title"          property="title"/>
+        <result column="content"        property="content"/>
+        <result column="writer"         property="writer"/>
+        <result column="reg_date"       property="regDate"/>
+        <result column="update_date"    property="updateDate" />
+        <collection property="attaches" resultMap="attachmentMap"/>
+    </resultMap>
 </mapper>
