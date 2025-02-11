@@ -1,1 +1,1 @@
-## MySQL, Spring, Spring Security, JWT 프로젝트
+## MySQL, Spring, Spring Security, JWT 개인 프로젝트
